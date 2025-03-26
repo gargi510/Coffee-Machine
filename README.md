@@ -71,4 +71,4 @@ Enjoy your virtual coffee machine! This project is a great way to practice Pytho
 
 ---
 
-**Developed by Gargi Mishra** – Hope you enjoy your coffee! ☕🎉
+**Developed by Gargi Mishra** (www.linkedin.com/gargi510) – Hope you enjoy your coffee! ☕🎉
