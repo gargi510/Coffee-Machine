@@ -1,0 +1,83 @@
+from data import MENU
+from data import resources
+
+switch = 'on'
+money = 0
+
+
+def amount_payed():
+    print("Please insert coins\n")
+    quarter = int(input("How many quarters? "))
+    dime = int(input("How many dimes? "))
+    nickle = int(input("How many nickles? "))
+    penny = int(input("How many pennies? "))
+    total = ((25 * quarter) + (10 * dime) + (5 * nickle) + penny) / 100
+    return ((25 * quarter) + (10 * dime) + (5 * nickle) + penny) / 100
+
+
+def change_calculation(variety):
+    total = amount_payed()
+    global price
+    if total > price:
+        change = total - MENU[variety]["cost"]
+        print(f"Here is ${change} in change. Her is your {variety}. Enjoy!")
+
+    elif total < price:
+        print("Not enough money. Money refunded.")
+        exit()
+
+
+def report_generation(MENU, resources):
+    global variety
+    global switch
+    if variety == 'report':
+        return resources
+
+    else:
+        if resources['water'] >= MENU[variety]['ingredients']['water']:
+            resources['water'] = resources['water'] - MENU[variety][
+                'ingredients']['water']
+        else:
+            print("Not sufficient water")
+            switch = 'off'
+            exit()
+        if variety != 'espresso':
+            if resources['milk'] >= MENU[variety]['ingredients']['milk']:
+                resources['milk'] = resources['milk'] - MENU[variety][
+                    'ingredients']['milk']
+            else:
+                print("Not sufficient milk")
+
+        if resources['coffee'] >= MENU[variety]['ingredients']['coffee']:
+            resources['coffee'] = resources['coffee'] - MENU[variety][
+                'ingredients']['coffee']
+        else:
+            print("Not sufficient coffee")
+            switch = 'off'
+            exit()
+
+        return resources
+
+
+while switch == 'on':
+    variety = input(
+        "What would you like to have? (espresso/latte/cappuccino)").lower()
+
+    if variety == 'report':
+        for key in report_generation(MENU, resources).items():
+            print(key)
+        print(f"Money: ${money}")
+
+    elif variety == 'espresso' or variety == 'latte' or variety == 'cappuccino':
+        price = MENU[variety]["cost"]
+        report_generation(MENU, resources)
+        change_calculation(variety)
+
+        money = money + price
+
+    elif variety == 'off':
+        switch = 'off'
+        print("Switching off! Goodbye!")
+
+    else:
+        print("invalid input")
